@@ -38,5 +38,17 @@
 - hosts: postgresql
   become: false
   gather_facts: true
+  pre_tasks:
+    - name: Add archive DNF repos if we're on Fedora
+      yum_repository:
+        name: archive
+        description: Archive Fedora Repo
+        baseurl: "https://archives.fedoraproject.org/pub/archive/fedora/linux/{{ item }}/{{ image_name.split(':')[0] }}/x86_64/"
+      when: "{{ image_name | startswith('fedora') }}"
+      with_items:
+        - "updates"
+        - "releases"
+        - "core"
+        - "extras"
   roles:
     - ANXS.postgresql
