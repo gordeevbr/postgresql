@@ -41,7 +41,7 @@
   pre_tasks:
     - name: Add archive DNF repos if we're on Fedora
       yum_repository:
-        name: archive - {{ item }}
+        name: archive-{{ item }}
         description: Archive Fedora Repo
         baseurl: https://archives.fedoraproject.org/pub/archive/fedora/linux/{{ item }}/{{ image_name.split(':')[1] }}/x86_64/
       when: image_name | search('fedora')
